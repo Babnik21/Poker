@@ -1,4 +1,13 @@
 from random import choice, randint
+from itertools import combinations
+
+class Runda:
+    def __init__(self):
+        self.usedcards = []
+        self.pot = 0
+        self.side_pots = {}
+        self.maxBet = 0
+        self.board = []
 
 class Igra:
     def __init__(self, seznam, runda = Runda()):
@@ -9,13 +18,6 @@ class Igra:
     def nova_runda(self):
         self.runda = Runda()
 
-class Runda:
-    def __init__(self):
-        self.usedcards = []
-        self.pot = 0
-        self.side_pots = {}
-        self.maxBet = 0
-        self.board = []
 
 def naslednja_serija_stav(igra):
     igra.runda.maxBet = 0
@@ -44,10 +46,10 @@ class Karta:
         self.value = choice(['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'])
 
     def __str__(self):
-        return '{}{}'.format(self.suit, self.value)
+        return '{}{}'.format(self.value, self.suit)
 
     def __repr__(self):
-        return '{}{}'.format(self.suit, self.value)
+        return '{}{}'.format(self.value, self.suit)
 
     def __eq__(self, other):
         return self.value == other.value and self.suit == other.suit
@@ -77,7 +79,7 @@ class Player:
         self.total_bet = 0
         self.odstopil = False
         self.all_in = False
-        self.peterka = []
+        self.peterica = []
 
     def __str__(self):
         karte = ''
@@ -90,6 +92,12 @@ class Peterka:
     def __init__(self, seznam):
         self.karte = seznam
         self.jakost = 0
+
+    def __str__(self):
+        return str(self.karte)
+
+    def __repr__(self):
+        return str(self.karte)
 
     def pridobi_vrednosti(self):
         seznam = []
@@ -385,3 +393,16 @@ def player_call(igra, igralec):
 
 def player_fold(igralec):
     igralec.odstopil = True
+
+def pridobi_najboljsi_hand(igra, igralec):
+    seznam = igra.runda.board + igralec.karte
+    seznam_tuplov = combinations(seznam, 5)
+    seznam_handov = []
+    for el in seznam_tuplov:
+        seznam_handov.append(list(el))
+    a = seznam_handov[0]
+    for el in seznam_handov:
+        if el > a:
+            a = el
+    igralec.peterica = a
+

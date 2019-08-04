@@ -1,4 +1,4 @@
-from model import Karta, Igra, Player, Hand, Runda
+from model import Karta, Igra, Player, Hand, Runda, Peterka
 import model
 
 def pridobi_stack():
@@ -83,5 +83,9 @@ def program():
     igra = Igra(igralci)
     while True:
         game(igra)
+
+
+
+
 
 program()
