@@ -38,7 +38,6 @@ def poteza(igra, igralec):
     else:
         poteza_call(igralec)
 
-
 def poteza_check(igralec):
     print('Vi ste na potezi. Kaj želite narediti?')
     print('1) Fold')
@@ -65,11 +64,14 @@ def poteza_call(igralec):
     else:
         return int(odgovor)
 
+def prikazi_flop(igra):
+    print('Board je: {}, {}, {}.'.format(*igra.runda.board))
 
-def serija_stav(igra):
-    for igralec in igra.igralci:
-        if not igralec.odstopil:
-            poteza(igra, igralec)
+def prikazi_turn(igra):
+    print('Board je: {}, {}, {}, {}.'.format(*igra.runda.board))
+
+def prikazi_river(igra):
+    print('Board je: {}, {}, {}, {}, {}.'.format(*igra.runda.board))
 
 def game(igra):
     return None
@@ -83,7 +85,6 @@ def program():
     igra = Igra(igralci)
     while True:
         game(igra)
-
 
 
 
